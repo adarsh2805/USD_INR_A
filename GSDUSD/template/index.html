@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+<body>
+   <center><h1 style="color: blue;">India: Gross domestic product (GDP) in current prices from 1987 to 2027</h1>
+    </center>
+    
+<div id="myPlot" style="width:100%;height: 80vh;"></div>
+<center><div>
+   <div style="height: 200px;"> 
+<button onclick="convertusd('hsl(180, 94%, 43%)')" style="color: azure;background-color: hsl(180, 94%, 43%);border-radius: 5px 5px"> USD</button>
+<button onclick="convertinr('rgb(96, 184, 106)')"  style="color: azure;background-color: rgb(96, 184, 106);border-radius: 5px ;"> INR</button></div></center></div>
+<script>
+    this.convertusd('hsl(180, 94%, 43%)');
+    function convertusd(clr){    
+        const yArray = {{y | safe}}
+        var yaxis = {range: [0,{{y_erange}}], title: 'GDP in billion U.S. dollars' }
+        this.updateData(yArray,yaxis,clr);
+    }
+
+    function convertinr(clr){
+        var yArray = {{y_ind | safe}}
+        yaxis = {range: [{{ind_ysrange}},{{ind_yerange}}], title:'GDP in billion Indian Rupees'}
+        this.updateData(yArray,yaxis,clr);
+    }
+    function updateData(yArray,yaxis,clr) {
+        const xArray = {{x | safe}}
+        const data = [{
+                x: xArray,
+                y: yArray,
+                text: yArray,
+                textposition: 'auto',
+                type: "bar"  ,
+                marker: {
+    color: clr,
+    line: {
+      color: 'rgb(8,48,107)',
+      width: 1.5
+    }
+  },
+                }];
+        const layout = {
+            xaxis: {range:[{{x_srange}},{{x_erange}}] , title: "Years"},
+            yaxis: yaxis,
+            };
+        Plotly.newPlot("myPlot", data, layout);
+    }
+
+
+</script>
+
+
+</body>
+</html>
